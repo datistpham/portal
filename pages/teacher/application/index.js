@@ -5,25 +5,25 @@ import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { DeleteOutlined } from "@ant-design/icons";
 import swal from "sweetalert";
 // import { Button } from "@mui/material";
-import get_student_homeroom from "@/app/api/teacher/get_student_homeroom";
-import get_scrore_homeroom from "@/app/api/teacher/score/get_score_homeroom";
+// import get_student_homeroom from "@/app/api/teacher/get_student_homeroom";
+// import get_scrore_homeroom from "@/app/api/teacher/score/get_score_homeroom";
 // import UpdateScore from "./Component/UpdateScore";
 import Teacher, { TeacherContext } from "..";
-import { Checkbox } from "@mui/material";
+import { Button, Checkbox } from "@mui/material";
 import moment from "moment";
 import attendance_mark from "@/app/api/teacher/attendance_mark";
-import get_list_attendance from "@/app/api/teacher/get_list_attendance";
+import get_manage_absense_for_teacher from "@/app/api/teacher/get_manage_attendance_for_teacher";
 const TeacherManageScore = () => {
   return (
     <Teacher>
       <div style={{ flex: "1 1 0", height: "100vh", overflow: "auto" }}>
-        <ManageAttendance />
+        <ManageAbsense />
       </div>
     </Teacher>
   );
 };
 
-function ManageAttendance() {
+function ManageAbsense() {
   const [attendance, setAttendance]= React.useState()
   const {homeRoom }= React.useContext(TeacherContext)
   const [data, setData] = React.useState([]);
@@ -60,12 +60,16 @@ function ManageAttendance() {
       editable: true,
     },
     {
-      field: "attendance",
-      headerName: "Attendance"+ " ("+ moment(new Date()).format("DD-MM-YYYY") + ")",
+      field: "content",
+      headerName: "Reason",
       width: 250,
-      editable: true,
+    },
+    {
+      field: "attach_file",
+      headerName: "File attach",
+      width: 250,
       renderCell: (params)=> {
-        return <Checkbox checked={parseInt(params.row?.attendance)=== 1 ? true : false} onChange={(e)=> attendanceHandler(e, params.row.id)} />
+        return <a style={{color: "#2e89ff"}} target="_blank" href={window.location.origin+ "/uploads"+ "/" + params.row.attach_file}>Here</a>
       }
     },
     {
@@ -85,9 +89,27 @@ function ManageAttendance() {
             {/* <UpdateScore {...params.row} setChange={setChange} /> */}
             {/* <UpdateStudent {...params.row} setChange={setChange} /> */}
             {/* <ViewAttendance {...params.row} /> */}
+            <Button type={"primary"} variant={"contained"} onClick={()=> {
+              swal("", "", {buttons: {
+                ok: "Approve",
+                no: "Refuse",
+                cancel: "Cancel"
+              }})
+              .then(value=> {
+                if(value=== "ok") {
+
+                }
+                else if(value=== "no") {
+
+                }
+                else {
+                  return null
+                }
+              })
+            }}>Action</Button>
             <DeleteOutlined
               onClick={async () => {
-                swal("Notice", "Are you sure want to delete this student", {
+                swal("Notice", "Are you sure want to delete this request", {
                   buttons: {
                     ok: "Confirm",
                     cancel: "Cancel",
@@ -132,7 +154,7 @@ function ManageAttendance() {
     (async () => {
       // uid teacher
       if(homeRoom) {
-          const result= await get_list_attendance(homeRoom)
+          const result= await get_manage_absense_for_teacher(homeRoom)
           setData(result);
       }
     })();

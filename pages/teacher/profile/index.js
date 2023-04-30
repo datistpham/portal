@@ -1,9 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+// import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 // import axios from "axios";
-import { DeleteOutlined } from "@ant-design/icons";
-import swal from "sweetalert";
+// import { DeleteOutlined } from "@ant-design/icons";
+// import swal from "sweetalert";
 // import { Button } from "@mui/material";
 // import UpdateScore from "./Component/UpdateScore";
 import Teacher, { TeacherContext } from "..";
