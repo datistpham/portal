@@ -1,59 +1,73 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-// import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 // import axios from "axios";
-// import UpdateStudent from "./Component/UpdateStudent";
 import { DeleteOutlined } from "@ant-design/icons";
+import swal from "sweetalert";
 // import { Button } from "@mui/material";
-import Student from "../..";
-import get_profile_student from "@/app/api/student/get_profile";
-import Cookies from "js-cookie";
-import { DataGrid } from "@mui/x-data-grid";
-import NewApplication from "./Component/NewApplication";
-const StudentProfile = () => {
+import get_student_homeroom from "@/app/api/teacher/get_student_homeroom";
+import get_scrore_homeroom from "@/app/api/teacher/score/get_score_homeroom";
+// import UpdateScore from "./Component/UpdateScore";
+import Teacher, { TeacherContext } from "..";
+import { Checkbox } from "@mui/material";
+import moment from "moment";
+import ViewAttendance from "./component/ViewAttendance";
+import attendance_mark from "@/app/api/teacher/attendance_mark";
+import get_list_attendance from "@/app/api/teacher/get_list_attendance";
+const TeacherManageScore = () => {
   return (
-    <Student>
+    <Teacher>
       <div style={{ flex: "1 1 0", height: "100vh", overflow: "auto" }}>
-        <StudentData />
+        <ManageAttendance />
       </div>
-    </Student>
+    </Teacher>
   );
 };
 
-function StudentData() {
+function ManageAttendance() {
+  const [attendance, setAttendance]= React.useState()
+  const {homeRoom }= React.useContext(TeacherContext)
   const [data, setData] = React.useState([]);
-  const [change, setChange] = React.useState(false);
+  const [change, setChange] = React.useState([]);
+  const attendanceHandler= async (e, student_id, class_id= homeRoom)=> {
+    setAttendance(!attendance)
+    if(!attendance) {
+        const result= await attendance_mark({student_id, class_id, attendance: 1})
+        setChange(prev=> !prev)
+    }
+    else {
+        const result= await attendance_mark({student_id, class_id, attendance: 0})
+        setChange(prev=> !prev)
+    }
+  }
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "course_name",
-      headerName: "Course name",
+      field: "first_name",
+      headerName: "First name",
       width: 150,
       editable: true,
     },
     {
-      field: "status",
-      headerName: "Status",
+      field: "middle_name",
+      headerName: "Middle name",
       width: 150,
       editable: true,
-      renderCell: (params) => {
-        if (params.row.status === 0) {
-          return "Request";
-        } else if (params.row.status === 1) {
-          return "Learning";
-        } else {
-          return "Unknown";
-        }
-      },
     },
     {
-      field: "time_register",
-      headerName: "Time register",
-      width: 350,
+      field: "last_name",
+      headerName: "Last name",
+      width: 150,
       editable: true,
-      renderCell: (params) => {
-        return moment(params.row.time_register).format("DD-MM-YYYY HH:mm:ss");
-      },
+    },
+    {
+      field: "attendance",
+      headerName: "Attendance"+ " ("+ moment(new Date()).format("DD-MM-YYYY") + ")",
+      width: 250,
+      editable: true,
+      renderCell: (params)=> {
+        return <Checkbox checked={parseInt(params.row?.attendance)=== 1 ? true : false} onChange={(e)=> attendanceHandler(e, params.row.id)} />
+      }
     },
     {
       headerName: "Action",
@@ -69,8 +83,10 @@ function StudentData() {
               gap: 10,
             }}
           >
-            {/* <UpdateRegisterCourse setChange={setChange} {...params.row} /> */}
-            <DeleteOutlined
+            {/* <UpdateScore {...params.row} setChange={setChange} /> */}
+            {/* <UpdateStudent {...params.row} setChange={setChange} /> */}
+            <ViewAttendance {...params.row} />
+            {/* <DeleteOutlined
               onClick={async () => {
                 swal("Notice", "Are you sure want to delete this student", {
                   buttons: {
@@ -106,24 +122,28 @@ function StudentData() {
               }}
               style={{ cursor: "pointer" }}
               title={"Delete student"}
-            />
+            /> */}
           </div>
         );
       },
     },
   ];
+ 
   React.useEffect(() => {
     (async () => {
       // uid teacher
-      // const result = await get_course_register(Cookies.get("uid"));
-      // return setData(result);
+      if(homeRoom) {
+          const result= await get_list_attendance(homeRoom)
+          setData(result);
+      }
     })();
-  }, [change]);
+  }, [change, homeRoom]);
 
   return (
-    <Box sx={{ height: 400, width: "100%", padding: 1}}>
-      {/* <RegisterCourse setChange={setChange} /> */}
-      <NewApplication />
+    <Box sx={{ height: 400, width: "100%" }}>
+      <div style={{fontWeight: 600, fontSize: 18}}>
+        List of students in your class
+      </div>
       <div></div>
       <br />
       <div></div>
@@ -144,4 +164,4 @@ function StudentData() {
   );
 }
 
-export default StudentProfile;
+export default TeacherManageScore;

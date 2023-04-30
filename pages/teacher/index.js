@@ -1,5 +1,4 @@
 import {
-    AppstoreOutlined,
     ContainerOutlined,
     MenuFoldOutlined,
     PieChartOutlined,
@@ -10,6 +9,7 @@ import {
   import Link from "next/link";
   import Header from "@/component/Header";
 import get_class_homeroom from "@/app/api/teacher/get_class_homeroom";
+import Cookies from "js-cookie";
   
   function getItem(label, key, icon, children, type) {
     return {
@@ -69,9 +69,9 @@ import get_class_homeroom from "@/app/api/teacher/get_class_homeroom";
     const [homeRoom, setHomeRoom]= useState()
     useEffect(()=> {
       (async ()=> {
-        const result= await get_class_homeroom(2)
-        if(result?.class_id) {
-          return setHomeRoom(result)
+        const result= await get_class_homeroom(Cookies.get("uid"))
+        if(result[0]?.class_id) {
+          return setHomeRoom(result[0]?.class_id)
         }
       })()
     }, [])

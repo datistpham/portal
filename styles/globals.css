@@ -101,3 +101,94 @@ a {
     color-scheme: dark;
   }
 }
+.react-calendar * {
+  color: #000;
+}
+.attendance-day *{
+  color: #2e89ff !important;
+}
+.attendance-day {
+  
+  background-color: yellow;
+}
+.absent-day {
+  color: #000;
+}
+
+.react-calendar {
+  width: 100%;
+  max-width: 700px;
+}
+
+.react-calendar__tile {
+  border-right: 1px solid #000 !important;
+  border-bottom: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+
+
+.react-calendar__month-view__days__day--weekend {
+  border-right: 1px solid #e1e1e1;
+}
+.react-calendar__month-view__days__day {
+  border-right: 1px solid #ae9494;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  border-right-color: #c4c4c4;
+}
+
+.recharts-legend-item {
+  margin-right: 30px !important;
+}
+
+.ant-menu-title-content {
+  
+}
+
+.react-calendar {
+  width: 500px !important;
+}
+
+.file-input-container {
+  position: relative;
+  display: inline-block;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.file-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #ccc;
+}
+
+.file-icon i {
+  font-size: inherit;
+}
+
+.file-input-container:hover .file-icon,
+.file-input-container:focus-within .file-icon {
+  color: #4caf50;
+}

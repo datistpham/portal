@@ -2,6 +2,7 @@ import role from '@/app/api/role/role'
 import '@/styles/globals.css'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import "react-calendar/dist/Calendar.css";
 
 export default function App({ Component, pageProps }) {
   const [auth, setAuth]= useState()

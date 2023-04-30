@@ -1,9 +1,9 @@
 import get_post from "@/app/api/get_post";
 import Header from "@/app/component/Header";
 import { Grid } from "@mui/material";
-import { Image } from "antd";
 import moment from "moment";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Truncate = dynamic(import('react-truncate'), {
@@ -24,29 +24,34 @@ const HomePage = () => {
       <Header />
       <br />
       <div style={{ padding: 10, fontSize: 24 }}>New post</div>
-      <Grid container style={{ width: "100%" }}>
+      <div style={{ width: "100%", display: "flex", alignItems: "center", flexWrap: "wrap" }}>
         {postData?.map((item, key) => (
-          <Grid
+          <div
             key={key}
             item
             xs={3}
             padding={3}
-            style={{ display: "flex", gap: 10 }}
+            style={{ padding: 10, width: "20%"}}
           >
-            <Image
-              alt={""}
-              src={item?.image}
-              style={{ width: "100%", aspectRatio: 2 / 3, objectFit: "cover" }}
-            />
+            <div
+                style={{ width: "100%", aspectRatio: 2 / 3, objectFit: "cover", position: "relative" }}
+            >
+              <Image
+                style={{backgroundColor: "#e5e5e5", borderRadius: 10}}
+                fill={"layout"}
+                alt={""}
+                src={item?.image}
+              />
+            </div>
             <div>
-              <div>{item?.title || "Untitled"}</div>
               <br />
+              <div style={{fontSize: 18, fontWeight: 600}}>{item?.title || "Untitled"}</div>
               <br />
               <div>{moment(item?.time_created)?.format("DD-MM-YYYY")}</div>
             </div>
-          </Grid>
+          </div>
         ))}
-      </Grid>
+      </div>
     </div>
   );
 };
