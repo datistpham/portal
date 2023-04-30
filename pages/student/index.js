@@ -1,83 +1,72 @@
 import {
-    AppstoreOutlined,
-    ContainerOutlined,
-    MenuFoldOutlined,
-    PieChartOutlined,
-    MenuUnfoldOutlined,
-  } from "@ant-design/icons";
-  import { Button, Menu } from "antd";
-  import { createContext, useEffect, useState } from "react";
-  import Link from "next/link";
-  import Header from "@/component/Header";
-import get_class_homeroom from "@/app/api/teacher/get_class_homeroom";
-  
-  function getItem(label, key, icon, children, type) {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    };
-  }
-  const items = [
-    getItem(
-      <Link href="/student/profile">Profile</Link>,
-      "1",
-      <PieChartOutlined />
-    ),
-    getItem(
-      <Link href="/student/contact">Contact</Link>,
-      "2",
-      <ContainerOutlined />
-    ),
-    getItem(
-      <Link href="/student/register/term">Register term</Link>,
-      "4",
-      <ContainerOutlined />
-    ),
-    ,
-    getItem(
-      <Link href="/student/feedback">Feed back</Link>,
-      "5",
-      <ContainerOutlined />
-    ),
-    getItem(
-        <Link href="/student/application/absense">Application absense</Link>,
-        "6",
-        <ContainerOutlined />
-      ),
-  //   getItem(
-  //     <Link href="/admin/teachers">Manage teacher</Link>,
-  //     "5",
-  //     <ContainerOutlined />
-  //   ),
-  //   getItem("Navigation One", "sub1", <ContainerOutlined />, [
-  //     getItem("Option 5", "5"),
-  //     getItem("Option 6", "6"),
-  //     getItem("Option 7", "7"),
-  //     getItem("Option 8", "8"),
-  //   ]),
-  //   getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
-  //     getItem("Option 9", "9"),
-  //     getItem("Option 10", "10"),
-  //     getItem("Submenu", "sub3", null, [
-  //       getItem("Option 11", "11"),
-  //       getItem("Option 12", "12"),
-  //     ]),
-  //   ]),
-  ];
-  const Student = ({ children }) => {
-    const [selected, setSelected] = useState(1);
-    const [collapsed, setCollapsed] = useState(false);
-    const toggleCollapsed = () => {
-      setCollapsed(!collapsed);
-    };
-    return (
-     <>
+  // AppstoreOutlined,
+  ContainerOutlined,
+  MenuFoldOutlined,
+  PieChartOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
+import { Button, Menu } from "antd";
+import { createContext, useEffect, useState } from "react";
+import Link from "next/link";
+import Header from "@/component/Header";
+// import get_class_homeroom from "@/app/api/teacher/get_class_homeroom";
+import get_profile_student from "@/app/api/student/get_profile"
+import Cookies from "js-cookie";
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
+const items = [
+  getItem(
+    <Link href="/student/profile">Profile</Link>,
+    "1",
+    <PieChartOutlined />
+  ),
+  getItem(
+    <Link href="/student/contact">Contact</Link>,
+    "2",
+    <ContainerOutlined />
+  ),
+  getItem(
+    <Link href="/student/register/term">Register term</Link>,
+    "4",
+    <ContainerOutlined />
+  ),
+  ,
+  getItem(
+    <Link href="/student/feedback">Feed back</Link>,
+    "5",
+    <ContainerOutlined />
+  ),
+  getItem(
+    <Link href="/student/application/absense">Application absense</Link>,
+    "6",
+    <ContainerOutlined />
+  ),
+];
+export const StudentContext= createContext()
+const Student = ({ children }) => {
+  const [selected, setSelected] = useState(1);
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+  const [studentData, setStudentData]= useState()
+  useEffect(()=> {
+    (async ()=> {
+      const result= await get_profile_student(Cookies.get("uid"))
+      return setStudentData(result[0])
+    })()
+  }, [])
+  return (
+    <StudentContext.Provider value={{studentData}}>
       <Header />
-       <div style={{ width: "100%", display: "flex", height: "100vh" }}>
-              
+      <div style={{ width: "100%", display: "flex", height: "100vh" }}>
         <div
           style={{
             maxWidth: 256,
@@ -104,8 +93,7 @@ import get_class_homeroom from "@/app/api/teacher/get_class_homeroom";
         </div>
         {children || ""}
       </div>
-     </>
-    );
-  };
-  export default Student;
- 
+    </StudentContext.Provider>
+  );
+};
+export default Student;

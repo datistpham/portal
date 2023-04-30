@@ -5,12 +5,15 @@ import Box from "@mui/material/Box";
 // import UpdateStudent from "./Component/UpdateStudent";
 import { DeleteOutlined } from "@ant-design/icons";
 // import { Button } from "@mui/material";
-import Student from "../..";
-import get_profile_student from "@/app/api/student/get_profile";
-import Cookies from "js-cookie";
+import Student, { StudentContext } from "../..";
+// import get_profile_student from "@/app/api/student/get_profile";
+// import Cookies from "js-cookie";
 import { DataGrid } from "@mui/x-data-grid";
 import NewApplication from "./Component/NewApplication";
-const StudentProfile = () => {
+import Cookies from "js-cookie";
+import get_list_application from "@/app/api/student/get_list_application";
+import moment from "moment";
+const StudentApplicationAbsense = () => {
   return (
     <Student>
       <div style={{ flex: "1 1 0", height: "100vh", overflow: "auto" }}>
@@ -23,36 +26,41 @@ const StudentProfile = () => {
 function StudentData() {
   const [data, setData] = React.useState([]);
   const [change, setChange] = React.useState(false);
+  const {studentData }= React.useContext(StudentContext)
+
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "course_name",
-      headerName: "Course name",
-      width: 150,
-      editable: true,
+      field: "content",
+      headerName: "Content",
+      width: 250,
     },
     {
       field: "status",
       headerName: "Status",
       width: 150,
-      editable: true,
       renderCell: (params) => {
         if (params.row.status === 0) {
           return "Request";
         } else if (params.row.status === 1) {
-          return "Learning";
+          return "Approved";
         } else {
           return "Unknown";
         }
       },
     },
     {
-      field: "time_register",
-      headerName: "Time register",
+      field: "time_absense",
+      headerName: "Time absense",
+      width: 200,
+    },
+    {
+      field: "time_created",
+      headerName: "Time created",
       width: 350,
       editable: true,
       renderCell: (params) => {
-        return moment(params.row.time_register).format("DD-MM-YYYY HH:mm:ss");
+        return moment(params.row.time_created).format("DD-MM-YYYY HH:mm:ss");
       },
     },
     {
@@ -114,16 +122,17 @@ function StudentData() {
   ];
   React.useEffect(() => {
     (async () => {
-      // uid teacher
-      // const result = await get_course_register(Cookies.get("uid"));
-      // return setData(result);
+      if(studentData?.class_id) {
+        const result = await get_list_application(Cookies.get("uid"), studentData?.class_id);
+        return setData(result);
+      }
     })();
-  }, [change]);
+  }, [change, studentData]);
 
   return (
     <Box sx={{ height: 400, width: "100%", padding: 1}}>
       {/* <RegisterCourse setChange={setChange} /> */}
-      <NewApplication />
+      <NewApplication class_id={studentData?.class_id} student_id={Cookies.get("uid")} />
       <div></div>
       <br />
       <div></div>
@@ -144,4 +153,4 @@ function StudentData() {
   );
 }
 
-export default StudentProfile;
+export default StudentApplicationAbsense;

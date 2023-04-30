@@ -10,18 +10,20 @@ import { TextareaAutosize } from '@mui/material';
 import { DatePicker, Space } from 'antd';
 import moment from 'moment';
 import uploadFile from '@/app/api/upload-file';
+import add_application_absense from '@/app/api/student/add_application_absense';
+import swal from 'sweetalert';
 const { RangePicker } = DatePicker;
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function NewApplication() {
+export default function NewApplication(props) {
   const [open, setOpen] = React.useState(false);
   const [fileAttach, setFileAttach]= React.useState()
-  const [startDate, setStartData]= React.useState()
+  const [startDate, setStartDate]= React.useState()
   const [endDate, setEndDate]= React.useState()
-
+  const [content, setContent]= React.useState()
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -30,11 +32,13 @@ export default function NewApplication() {
     setOpen(false);
   };
   const onChange = (value, dateString) => {
-    console.log('Selected Time: ', value);
-    console.log('Formatted Selected Time: ', dateString);
+    // console.log('Selected Time: ', value);
+    // console.log('Formatted Selected Time: ', dateString);
   };
   const onOk = (value) => {
-    console.log('onOk: ', value[0].format("DD-MM-YYYY"));
+    // console.log('onOk: ', value[0].format("DD-MM-YYYY"));
+    setStartDate(value[0].format("DD-MM-YYYY"))
+    setEndDate(value[1].format("DD-MM-YYYY"))
     
   };
   return (
@@ -51,7 +55,7 @@ export default function NewApplication() {
       >
         <DialogTitle>{"New application"}</DialogTitle>
         <DialogContent>
-          <textarea placeholder={"Reason"} style={{width: 500, fontSize: 16, backgroundColor: "#d7d7d7", height: 300, resize: "none", outline: "none", borderRadius: 10, padding: 10, color: '#000'}} rows={4}>
+          <textarea value={content} onChange={(e)=> setContent(e.target.value)} placeholder={"Reason"} style={{width: 500, fontSize: 16, backgroundColor: "#d7d7d7", height: 300, resize: "none", outline: "none", borderRadius: 10, padding: 10, color: '#000'}} rows={4}>
 
           </textarea>
           <br />
@@ -87,7 +91,18 @@ export default function NewApplication() {
             const formData= new FormData()
             formData.append("file", Object.values(fileAttach)?.[0])
             const fileUpload= await uploadFile(formData)
-            console.log(fileUpload)
+            const result= await add_application_absense(content, fileUpload?.file, startDate, endDate, props?.student_id, props?.class_id)
+            if(result?.add=== true) {
+              swal("Notice", "Add application absense request", "success")
+              .then(()=> handleClose())
+              .then(()=> {
+                setFileAttach()
+                setContent()
+                setStartDate()
+                setEndDate()
+              })
+            }
+            // console.log(fileUpload)
           }}>Submit</Button>
         </DialogActions>
       </Dialog>

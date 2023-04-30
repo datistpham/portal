@@ -16,6 +16,7 @@ const login= async (req, res)=> {
             }
             if(rows[0].role=== 2) {
                 const [rows1]= await connection.execute("SELECT teacher_id FROM teacher WHERE account_id= ?", [rows[0]?.account_id])
+                console.log(rows1)
                 if(rows1.length > 0) {
                     return res.status(200).json({exist: true, login: true, role: 2, uid: rows1[0].teacher_id})
                 }

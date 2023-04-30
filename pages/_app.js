@@ -12,6 +12,7 @@ export default function App({ Component, pageProps }) {
     (async ()=> {
       const result= await role()
       if(result?.login === true ) {
+        setUser(result)
         if(result.data?.role=== 1) {
           router.push("/student")
         }
