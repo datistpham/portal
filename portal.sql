@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2023 at 09:50 AM
+-- Generation Time: May 02, 2023 at 05:39 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -65,7 +65,7 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`account_id`, `account`, `password`, `role`) VALUES
 ('1', 'admin', '123456789', 3),
-('2', 'student1', '123456789', 1),
+('2', 'student1', 'Giangvippro1!', 1),
 ('37f24e90-f345-4797-9905-09b389d4c2dd', 'admin', '123456789', 1),
 ('6ef3cfff-48d9-4119-b08e-7c8bf1560d64', 'teacher1', '123456789', 2),
 ('b448400b-6dee-4045-aecc-f74e40d4638a', 'admin', '123456789', 1);
@@ -186,6 +186,29 @@ INSERT INTO `post` (`id`, `title`, `image`, `content`, `time_created`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `schedule`
+--
+
+CREATE TABLE `schedule` (
+  `id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `day_schedule` varchar(255) NOT NULL,
+  `shift` int(11) NOT NULL,
+  `time_start` int(11) NOT NULL,
+  `time_end` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`id`, `course_id`, `class_id`, `day_schedule`, `shift`, `time_start`, `time_end`) VALUES
+(1, 2, 9, '02/05/2023', 1, 3, 5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `score`
 --
 
@@ -193,6 +216,7 @@ CREATE TABLE `score` (
   `score_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
   `score_1` float NOT NULL,
   `score_2` float NOT NULL,
   `mid_term` float NOT NULL,
@@ -203,8 +227,8 @@ CREATE TABLE `score` (
 -- Dumping data for table `score`
 --
 
-INSERT INTO `score` (`score_id`, `student_id`, `class_id`, `score_1`, `score_2`, `mid_term`, `final_term`) VALUES
-(1, 2, 9, 10, 9, 10, 8.5);
+INSERT INTO `score` (`score_id`, `student_id`, `class_id`, `course_id`, `score_1`, `score_2`, `mid_term`, `final_term`) VALUES
+(1, 2, 9, 2, 9, 9, 10, 8.5);
 
 -- --------------------------------------------------------
 
@@ -219,6 +243,7 @@ CREATE TABLE `student` (
   `last_name` varchar(255) NOT NULL,
   `class_id` int(11) NOT NULL,
   `dob` varchar(255) NOT NULL,
+  `gender` int(11) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `account_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -227,8 +252,8 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `class_id`, `dob`, `phone`, `account_id`) VALUES
-(2, 'Pham1', 'Truong', 'Giang', 9, '06/08/2002', '0388015984', '2');
+INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `class_id`, `dob`, `gender`, `phone`, `account_id`) VALUES
+(2, 'Pham1', 'Truong', 'Giang', 9, '06/08/2002', 0, '0388015984', '2');
 
 -- --------------------------------------------------------
 
@@ -292,6 +317,26 @@ CREATE TABLE `teacher_homeroom` (
 INSERT INTO `teacher_homeroom` (`teacher_id`, `class_id`) VALUES
 (2, 9);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teacher_teach_subject`
+--
+
+CREATE TABLE `teacher_teach_subject` (
+  `teacher_teach_subject_id` int(11) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `teacher_teach_subject`
+--
+
+INSERT INTO `teacher_teach_subject` (`teacher_teach_subject_id`, `teacher_id`, `course_id`, `class_id`) VALUES
+(1, 2, 2, 9);
+
 --
 -- Indexes for dumped tables
 --
@@ -339,6 +384,12 @@ ALTER TABLE `post`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `score`
 --
 ALTER TABLE `score`
@@ -367,6 +418,12 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `teacher_homeroom`
   ADD PRIMARY KEY (`class_id`,`teacher_id`);
+
+--
+-- Indexes for table `teacher_teach_subject`
+--
+ALTER TABLE `teacher_teach_subject`
+  ADD PRIMARY KEY (`teacher_teach_subject_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -409,6 +466,12 @@ ALTER TABLE `post`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `schedule`
+--
+ALTER TABLE `schedule`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `score`
 --
 ALTER TABLE `score`
@@ -431,6 +494,12 @@ ALTER TABLE `student_learning_course`
 --
 ALTER TABLE `teacher`
   MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `teacher_teach_subject`
+--
+ALTER TABLE `teacher_teach_subject`
+  MODIFY `teacher_teach_subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
