@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 02, 2023 at 05:39 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 02, 2023 lúc 08:17 AM
+-- Phiên bản máy phục vụ: 10.4.22-MariaDB
+-- Phiên bản PHP: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `portal`
+-- Cơ sở dữ liệu: `portal`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `absense_application`
+-- Cấu trúc bảng cho bảng `absense_application`
 --
 
 CREATE TABLE `absense_application` (
@@ -39,7 +39,7 @@ CREATE TABLE `absense_application` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `absense_application`
+-- Đang đổ dữ liệu cho bảng `absense_application`
 --
 
 INSERT INTO `absense_application` (`id`, `student_id`, `class_id`, `content`, `attach_file`, `time_absense`, `time_created`, `status`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `absense_application` (`id`, `student_id`, `class_id`, `content`, `a
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Cấu trúc bảng cho bảng `account`
 --
 
 CREATE TABLE `account` (
@@ -60,7 +60,7 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `account`
+-- Đang đổ dữ liệu cho bảng `account`
 --
 
 INSERT INTO `account` (`account_id`, `account`, `password`, `role`) VALUES
@@ -73,7 +73,7 @@ INSERT INTO `account` (`account_id`, `account`, `password`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Cấu trúc bảng cho bảng `admin`
 --
 
 CREATE TABLE `admin` (
@@ -83,7 +83,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `admin`
+-- Đang đổ dữ liệu cho bảng `admin`
 --
 
 INSERT INTO `admin` (`id`, `account`, `password`) VALUES
@@ -92,28 +92,30 @@ INSERT INTO `admin` (`id`, `account`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendance`
+-- Cấu trúc bảng cho bảng `attendance`
 --
 
 CREATE TABLE `attendance` (
   `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
   `attendance` int(11) NOT NULL DEFAULT 0,
   `time_attendance` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `attendance`
+-- Đang đổ dữ liệu cho bảng `attendance`
 --
 
-INSERT INTO `attendance` (`id`, `student_id`, `class_id`, `attendance`, `time_attendance`) VALUES
-(1, 2, 9, 1, '30-04-2023');
+INSERT INTO `attendance` (`id`, `student_id`, `class_id`, `course_id`, `attendance`, `time_attendance`) VALUES
+(1, 2, 9, 2, 1, '30-04-2023'),
+(6, 2, 9, 2, 0, '02-05-2023');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `class`
+-- Cấu trúc bảng cho bảng `class`
 --
 
 CREATE TABLE `class` (
@@ -123,7 +125,7 @@ CREATE TABLE `class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `class`
+-- Đang đổ dữ liệu cho bảng `class`
 --
 
 INSERT INTO `class` (`class_id`, `class_name`, `class_description`) VALUES
@@ -143,7 +145,7 @@ INSERT INTO `class` (`class_id`, `class_name`, `class_description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course`
+-- Cấu trúc bảng cho bảng `course`
 --
 
 CREATE TABLE `course` (
@@ -154,7 +156,7 @@ CREATE TABLE `course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `course`
+-- Đang đổ dữ liệu cho bảng `course`
 --
 
 INSERT INTO `course` (`course_id`, `course_name`, `course_description`, `lesson_number`) VALUES
@@ -164,7 +166,7 @@ INSERT INTO `course` (`course_id`, `course_name`, `course_description`, `lesson_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `post`
+-- Cấu trúc bảng cho bảng `post`
 --
 
 CREATE TABLE `post` (
@@ -176,7 +178,7 @@ CREATE TABLE `post` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `post`
+-- Đang đổ dữ liệu cho bảng `post`
 --
 
 INSERT INTO `post` (`id`, `title`, `image`, `content`, `time_created`) VALUES
@@ -186,7 +188,7 @@ INSERT INTO `post` (`id`, `title`, `image`, `content`, `time_created`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `schedule`
+-- Cấu trúc bảng cho bảng `schedule`
 --
 
 CREATE TABLE `schedule` (
@@ -200,7 +202,7 @@ CREATE TABLE `schedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `schedule`
+-- Đang đổ dữ liệu cho bảng `schedule`
 --
 
 INSERT INTO `schedule` (`id`, `course_id`, `class_id`, `day_schedule`, `shift`, `time_start`, `time_end`) VALUES
@@ -209,7 +211,7 @@ INSERT INTO `schedule` (`id`, `course_id`, `class_id`, `day_schedule`, `shift`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `score`
+-- Cấu trúc bảng cho bảng `score`
 --
 
 CREATE TABLE `score` (
@@ -224,7 +226,7 @@ CREATE TABLE `score` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `score`
+-- Đang đổ dữ liệu cho bảng `score`
 --
 
 INSERT INTO `score` (`score_id`, `student_id`, `class_id`, `course_id`, `score_1`, `score_2`, `mid_term`, `final_term`) VALUES
@@ -233,7 +235,7 @@ INSERT INTO `score` (`score_id`, `student_id`, `class_id`, `course_id`, `score_1
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student`
+-- Cấu trúc bảng cho bảng `student`
 --
 
 CREATE TABLE `student` (
@@ -249,7 +251,7 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `student`
+-- Đang đổ dữ liệu cho bảng `student`
 --
 
 INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `class_id`, `dob`, `gender`, `phone`, `account_id`) VALUES
@@ -258,7 +260,7 @@ INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_learning_course`
+-- Cấu trúc bảng cho bảng `student_learning_course`
 --
 
 CREATE TABLE `student_learning_course` (
@@ -270,7 +272,7 @@ CREATE TABLE `student_learning_course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `student_learning_course`
+-- Đang đổ dữ liệu cho bảng `student_learning_course`
 --
 
 INSERT INTO `student_learning_course` (`id`, `course_id`, `student_id`, `time_register`, `status`) VALUES
@@ -279,7 +281,7 @@ INSERT INTO `student_learning_course` (`id`, `course_id`, `student_id`, `time_re
 -- --------------------------------------------------------
 
 --
--- Table structure for table `teacher`
+-- Cấu trúc bảng cho bảng `teacher`
 --
 
 CREATE TABLE `teacher` (
@@ -293,7 +295,7 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `teacher`
+-- Đang đổ dữ liệu cho bảng `teacher`
 --
 
 INSERT INTO `teacher` (`teacher_id`, `first_name`, `middle_name`, `last_name`, `dob`, `phone`, `account_id`) VALUES
@@ -302,7 +304,7 @@ INSERT INTO `teacher` (`teacher_id`, `first_name`, `middle_name`, `last_name`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `teacher_homeroom`
+-- Cấu trúc bảng cho bảng `teacher_homeroom`
 --
 
 CREATE TABLE `teacher_homeroom` (
@@ -311,7 +313,7 @@ CREATE TABLE `teacher_homeroom` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `teacher_homeroom`
+-- Đang đổ dữ liệu cho bảng `teacher_homeroom`
 --
 
 INSERT INTO `teacher_homeroom` (`teacher_id`, `class_id`) VALUES
@@ -320,7 +322,7 @@ INSERT INTO `teacher_homeroom` (`teacher_id`, `class_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `teacher_teach_subject`
+-- Cấu trúc bảng cho bảng `teacher_teach_subject`
 --
 
 CREATE TABLE `teacher_teach_subject` (
@@ -331,172 +333,172 @@ CREATE TABLE `teacher_teach_subject` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `teacher_teach_subject`
+-- Đang đổ dữ liệu cho bảng `teacher_teach_subject`
 --
 
 INSERT INTO `teacher_teach_subject` (`teacher_teach_subject_id`, `teacher_id`, `course_id`, `class_id`) VALUES
 (1, 2, 2, 9);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `absense_application`
+-- Chỉ mục cho bảng `absense_application`
 --
 ALTER TABLE `absense_application`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `account`
+-- Chỉ mục cho bảng `account`
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`account_id`);
 
 --
--- Indexes for table `admin`
+-- Chỉ mục cho bảng `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `attendance`
+-- Chỉ mục cho bảng `attendance`
 --
 ALTER TABLE `attendance`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `class`
+-- Chỉ mục cho bảng `class`
 --
 ALTER TABLE `class`
   ADD PRIMARY KEY (`class_id`);
 
 --
--- Indexes for table `course`
+-- Chỉ mục cho bảng `course`
 --
 ALTER TABLE `course`
   ADD PRIMARY KEY (`course_id`);
 
 --
--- Indexes for table `post`
+-- Chỉ mục cho bảng `post`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `schedule`
+-- Chỉ mục cho bảng `schedule`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `score`
+-- Chỉ mục cho bảng `score`
 --
 ALTER TABLE `score`
   ADD PRIMARY KEY (`score_id`);
 
 --
--- Indexes for table `student`
+-- Chỉ mục cho bảng `student`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`student_id`);
 
 --
--- Indexes for table `student_learning_course`
+-- Chỉ mục cho bảng `student_learning_course`
 --
 ALTER TABLE `student_learning_course`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `teacher`
+-- Chỉ mục cho bảng `teacher`
 --
 ALTER TABLE `teacher`
   ADD PRIMARY KEY (`teacher_id`);
 
 --
--- Indexes for table `teacher_homeroom`
+-- Chỉ mục cho bảng `teacher_homeroom`
 --
 ALTER TABLE `teacher_homeroom`
   ADD PRIMARY KEY (`class_id`,`teacher_id`);
 
 --
--- Indexes for table `teacher_teach_subject`
+-- Chỉ mục cho bảng `teacher_teach_subject`
 --
 ALTER TABLE `teacher_teach_subject`
   ADD PRIMARY KEY (`teacher_teach_subject_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `absense_application`
+-- AUTO_INCREMENT cho bảng `absense_application`
 --
 ALTER TABLE `absense_application`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT cho bảng `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `attendance`
+-- AUTO_INCREMENT cho bảng `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `class`
+-- AUTO_INCREMENT cho bảng `class`
 --
 ALTER TABLE `class`
   MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `course`
+-- AUTO_INCREMENT cho bảng `course`
 --
 ALTER TABLE `course`
   MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `post`
+-- AUTO_INCREMENT cho bảng `post`
 --
 ALTER TABLE `post`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `schedule`
+-- AUTO_INCREMENT cho bảng `schedule`
 --
 ALTER TABLE `schedule`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `score`
+-- AUTO_INCREMENT cho bảng `score`
 --
 ALTER TABLE `score`
   MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `student`
+-- AUTO_INCREMENT cho bảng `student`
 --
 ALTER TABLE `student`
   MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `student_learning_course`
+-- AUTO_INCREMENT cho bảng `student_learning_course`
 --
 ALTER TABLE `student_learning_course`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `teacher`
+-- AUTO_INCREMENT cho bảng `teacher`
 --
 ALTER TABLE `teacher`
   MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `teacher_teach_subject`
+-- AUTO_INCREMENT cho bảng `teacher_teach_subject`
 --
 ALTER TABLE `teacher_teach_subject`
   MODIFY `teacher_teach_subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
