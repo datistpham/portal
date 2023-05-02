@@ -41,7 +41,7 @@ function StudentData() {
     },
     {
       headerName: "Action",
-      width: 200,
+      width: 250,
       editable: true,
       renderCell: (params) => {
         return (
@@ -55,43 +55,6 @@ function StudentData() {
           >
             {/* <UpdateStudent {...params.row} setChange={setChange} /> */}
             <Button onClick={()=> router.push("/teacher/subject/schedule/"+ params.row?.class_id + "/" + params.row?.course_id)} variant="contained">Access schedule</Button>
-            <DeleteOutlined
-              onClick={async () => {
-                swal("Notice", "Are you sure want to delete this student", {
-                  buttons: {
-                    ok: "Confirm",
-                    cancel: "Cancel",
-                  },
-                }).then(async (value) => {
-                  if (value === "ok") {
-                    const res = await fetch(
-                      `/api/v3/student/${params.row.id}`,
-                      {
-                        method: "DELETE",
-                        body: JSON.stringify({ student_id: params.row.id }),
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                      }
-                    );
-                    const result = await res.json();
-                    if (result?.delete === true) {
-                      swal(
-                        "Notice",
-                        "Delete student successfully",
-                        "success"
-                      ).then(() => setChange((prev) => !prev));
-                    } else {
-                      swal("Notice", "Error unexpected", "error");
-                    }
-                  } else {
-                    return null;
-                  }
-                });
-              }}
-              style={{ cursor: "pointer" }}
-              title={"Delete student"}
-            />
           </div>
         );
       },
