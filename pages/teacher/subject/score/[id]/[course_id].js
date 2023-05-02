@@ -2,14 +2,18 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 // import axios from "axios";
-import UpdateStudent from "./Component/UpdateStudent";
 import { DeleteOutlined } from "@ant-design/icons";
 import swal from "sweetalert";
 // import { Button } from "@mui/material";
-import Teacher from "..";
+// import Teacher, { TeacherContext } from "..";
 import get_student_homeroom from "@/app/api/teacher/get_student_homeroom";
-import Cookies from "js-cookie";
-const TeacherManageStudents = () => {
+import get_scrore_homeroom from "@/app/api/teacher/score/get_score_homeroom";
+// import UpdateScore from "./Component/UpdateScore";
+import { useRouter } from "next/router";
+import get_list_score_class_subject from "@/app/api/teacher/subject/get_list_score_class_subject";
+import Teacher, { TeacherContext } from "@/pages/teacher";
+import UpdateScore from "../Component/UpdateScore";
+const TeacherManageScore = () => {
   return (
     <Teacher>
       <div style={{ flex: "1 1 0", height: "100vh", overflow: "auto" }}>
@@ -41,28 +45,29 @@ function StudentData() {
       editable: true,
     },
     {
-      field: "dob",
-      headerName: "DOB",
+      field: "score_1",
+      headerName: "Score 1",
       width: 150,
       editable: true,
     },
     {
-      field: "phone",
-      headerName: "Phone",
+      field: "score_2",
+      headerName: "Score 2",
       width: 150,
       editable: true,
     },
     {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.row.first_name || ""} ${params.row.middle_name || ""} ${
-          params.row.last_name || ""
-        }`,
-    },
+        field: "mid_term",
+        headerName: "Mid term",
+        width: 150,
+        editable: true,
+      },
+      {
+        field: "final_term",
+        headerName: "Final term",
+        width: 150,
+        editable: true,
+      },
     {
       field: "class_name",
       headerName: "Class",
@@ -83,7 +88,8 @@ function StudentData() {
               gap: 10,
             }}
           >
-            <UpdateStudent {...params.row} setChange={setChange} />
+            <UpdateScore {...params.row} setChange={setChange} />
+            {/* <UpdateStudent {...params.row} setChange={setChange} /> */}
             <DeleteOutlined
               onClick={async () => {
                 swal("Notice", "Are you sure want to delete this student", {
@@ -126,15 +132,18 @@ function StudentData() {
       },
     },
   ];
+  const {homeRoom }= React.useContext(TeacherContext)
+  const router= useRouter()
+  const {id, course_id}= router.query
   const [data, setData] = React.useState([]);
   const [change, setChange] = React.useState([]);
   React.useEffect(() => {
     (async () => {
       // uid teacher
-      const result= await get_student_homeroom(Cookies.get("uid"))
+      const result= await get_list_score_class_subject(id, course_id)
       setData(result);
     })();
-  }, [change]);
+  }, [change, id, course_id]);
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
@@ -158,4 +167,4 @@ function StudentData() {
   );
 }
 
-export default TeacherManageStudents;
+export default TeacherManageScore;

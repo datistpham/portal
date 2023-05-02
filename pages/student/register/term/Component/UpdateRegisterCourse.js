@@ -3,21 +3,21 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
+// import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+// import Box from "@mui/material/Box";
+// import InputLabel from "@mui/material/InputLabel";
+// import MenuItem from "@mui/material/MenuItem";
+// import FormControl from "@mui/material/FormControl";
+// import Select from "@mui/material/Select";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import register_course from "@/app/api/student/register_course";
-import Cookies from "js-cookie";
-import swal from "sweetalert";
-import Checkbox from "@mui/material/Checkbox";
+// import register_course from "@/app/api/student/register_course";
+// import Cookies from "js-cookie";
+// import swal from "sweetalert";
+// import Checkbox from "@mui/material/Checkbox";
 import Switch from '@mui/material/Switch';
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -80,7 +80,7 @@ export default function UpdateRegisterCourse(props) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Update register course"}</DialogTitle>
+        <DialogTitle>{"Update register subject"}</DialogTitle>
         <DialogContent>
         <label>Cancel</label>
         <Switch

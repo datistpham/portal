@@ -31,7 +31,7 @@ function StudentData() {
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "course_name",
-      headerName: "Course name",
+      headerName: "Subject name",
       width: 150,
       editable: true,
     },

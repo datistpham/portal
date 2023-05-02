@@ -47,6 +47,18 @@ import Cookies from "js-cookie";
       "5",
       <ContainerOutlined />
     ),
+    getItem("Manage Subject", "sub1", <ContainerOutlined />, [
+      getItem(<Link href="/teacher/subject/student">Manage student</Link>, "99",  <ContainerOutlined />),
+      getItem(<Link href="/teacher/subject/score">Manage score</Link>, "100",  <ContainerOutlined />),
+      getItem(<Link href="/teacher/subject/attendance">Manage attendance</Link>, "101",  <ContainerOutlined />),
+      getItem(<Link href="/teacher/subject/application">Manage application</Link>, "102",  <ContainerOutlined />),
+      ,
+    getItem(
+      <Link href="/teacher/subject/schedule">Manage schedule</Link>,
+      "6",
+      <ContainerOutlined />
+    )
+    ]),
   ];
   export const TeacherContext= createContext()
   const Teacher = ({ children }) => {

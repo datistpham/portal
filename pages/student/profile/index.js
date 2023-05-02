@@ -9,6 +9,7 @@ import Student from "..";
 import get_profile_student from "@/app/api/student/get_profile";
 import Cookies from "js-cookie";
 import UpdateProfile from "./Component/UpdateProfile";
+import UpdatePassword from "./Component/UpdatePassword";
 const StudentProfile = () => {
   return (
     <Student>
@@ -39,6 +40,10 @@ function StudentData() {
         <div style={{color: "#000", display: "flex", alignItems: "center", marginBottom: 12}}><div style={{width: 120}}>Phone: </div><strong>{data?.phone}</strong></div>
         <br />
         <UpdateProfile {...data} setChange={setChange} />
+        <div></div>
+        <br />
+        <div></div>
+        <UpdatePassword {...data} setChange={setChange} />
     </Box>
   );
 }

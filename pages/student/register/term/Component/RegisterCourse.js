@@ -49,7 +49,7 @@ export default function RegisterCourse() {
   return (
     <div>
       <Button variant="contained" onClick={handleClickOpen}>
-        Register a new course
+        Register a new subject
       </Button>
       <Dialog
         open={open}
@@ -61,7 +61,7 @@ export default function RegisterCourse() {
         <DialogTitle>{"Register course"}</DialogTitle>
         <DialogContent>
           <FormControl fullWidth style={{width: 500, marginTop: 12}}>
-            <InputLabel id="demo-simple-select-label">Course</InputLabel>
+            <InputLabel id="demo-simple-select-label">Subject</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"

@@ -2,14 +2,18 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 // import axios from "axios";
-import UpdateStudent from "./Component/UpdateStudent";
+// import UpdateStudent from "./Component/UpdateStudent";
 import { DeleteOutlined } from "@ant-design/icons";
 import swal from "sweetalert";
 // import { Button } from "@mui/material";
-import Teacher from "..";
+// import Teacher from "..";
 import get_student_homeroom from "@/app/api/teacher/get_student_homeroom";
 import Cookies from "js-cookie";
-const TeacherManageStudents = () => {
+import Teacher from "../..";
+import get_list_class_subject from "@/app/api/teacher/subject/get_list_class_subject";
+import { Button } from "@mui/material";
+import { useRouter } from "next/router";
+const TeacherManageStudentsSubject = () => {
   return (
     <Teacher>
       <div style={{ flex: "1 1 0", height: "100vh", overflow: "auto" }}>
@@ -20,53 +24,19 @@ const TeacherManageStudents = () => {
 };
 
 function StudentData() {
+  const router= useRouter()
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "first_name",
-      headerName: "First name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "middle_name",
-      headerName: "Middle name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "last_name",
-      headerName: "Last name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "dob",
-      headerName: "DOB",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "phone",
-      headerName: "Phone",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.row.first_name || ""} ${params.row.middle_name || ""} ${
-          params.row.last_name || ""
-        }`,
-    },
-    {
       field: "class_name",
-      headerName: "Class",
-      width: 110,
+      headerName: "Class name",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "course_name",
+      headerName: "Subject",
+      width: 150,
       editable: true,
     },
     {
@@ -83,7 +53,8 @@ function StudentData() {
               gap: 10,
             }}
           >
-            <UpdateStudent {...params.row} setChange={setChange} />
+            {/* <UpdateStudent {...params.row} setChange={setChange} /> */}
+            <Button onClick={()=> router.push("/teacher/subject/score/"+ params.row?.class_id+ "/" + params.row?.course_id)} variant="contained">Access score</Button>
             <DeleteOutlined
               onClick={async () => {
                 swal("Notice", "Are you sure want to delete this student", {
@@ -131,7 +102,7 @@ function StudentData() {
   React.useEffect(() => {
     (async () => {
       // uid teacher
-      const result= await get_student_homeroom(Cookies.get("uid"))
+      const result= await get_list_class_subject(Cookies.get("uid"))
       setData(result);
     })();
   }, [change]);
@@ -158,4 +129,4 @@ function StudentData() {
   );
 }
 
-export default TeacherManageStudents;
+export default TeacherManageStudentsSubject;
