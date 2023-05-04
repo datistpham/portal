@@ -46,6 +46,21 @@ const items = [
     "5",
     <ContainerOutlined />
   ),
+  getItem(
+    <Link href="/admin/subject">Manage student subject</Link>,
+    "6",
+    <ContainerOutlined />
+  ),
+  getItem(
+    <Link href="/admin/schedule">Manage schedule</Link>,
+    "7",
+    <ContainerOutlined />
+  ),
+  getItem(
+    <Link href="/admin/application-absense">Manage application absense</Link>,
+    "8",
+    <ContainerOutlined />
+  ),
 //   getItem(
 //     <Link href="/admin/teachers">Manage teacher</Link>,
 //     "5",

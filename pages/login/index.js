@@ -69,6 +69,10 @@ function Login() {
               <MDBBtn onClick={()=> {
                 router.push("/login/teacher")
               }} className='mb-4' size='lg'>Login with teacher</MDBBtn>
+              <br />
+              <MDBBtn onClick={()=> {
+                router.push("/login/admin")
+              }} className='mb-4' size='lg'>Login with admin</MDBBtn>
 
 
             </MDBCol>

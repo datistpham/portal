@@ -6,7 +6,6 @@ const uploadFile= async (data)=> {
         method: "POST",
         headers: {
             "Content-Type": "multipart/form-data",
-
         },
         data: data
     })
