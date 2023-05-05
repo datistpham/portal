@@ -13,6 +13,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import axios from "axios";
 import update_teacher from "@/app/api/admin/update_teacher";
+import { DatePicker } from "antd";
+import UploadImage from "@/utils/UploadImage";
+import upload_image from "@/app/api/upload_image";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +27,7 @@ export default function UpdateTeacher(props) {
   const [firstName, setFirstName] = React.useState(props?.first_name);
   const [middleName, setMiddleName] = React.useState(props?.middle_name);
   const [lastName, setLastName] = React.useState(props?.last_name);
+  const [avatar, setAvatar]= React.useState()
   const [dob, setDob] = React.useState(props?.dob);
   const [phone, setPhone] = React.useState(props?.phone);
   const [classId, setClassId] = React.useState(props?.class_id);
@@ -77,12 +81,15 @@ export default function UpdateTeacher(props) {
             <div></div>
             <br />
             <div></div>
-            <TextField
-              style={{ width: 400, height: 50 }}
-              label={"DOB"}
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-            />
+            <DatePicker getPopupContainer={(triggerNode) => {
+          return triggerNode.parentNode;
+        }} style={{width: "100%", height: 50, margin: "12px 0"}} onChange={(date, dateString)=> {
+            setDob(date?.format("DD/MM/YYYY"))
+          }} />
+          <div></div>
+            <br />
+            <div></div>
+          <UploadImage style={{width: "100%", height: 50, margin: "12px 0"}} setImage={setAvatar} title={"Avatar"} />
             <div></div>
             <br />
             <div></div>
@@ -110,17 +117,32 @@ export default function UpdateTeacher(props) {
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={async ()=> {
             try {
-              const result= await update_teacher({firstName, lastName, middleName, phone, dob, teacher_id: teacherId})
-              if(result?.update=== true) {
-                swal("Notice", "Updated teacher", "success")
-                .then(()=> props?.setChange(prev=> !prev))
+              if(avatar.thumbUrl) {
+                const avatarfinal= await upload_image(avatar.thumbUrl)
+                const result= await update_teacher({firstName, lastName, middleName, phone, dob, teacher_id: teacherId,avatar: avatarfinal.img})
+                if(result?.update=== true) {
+                  swal("Notice", "Updated teacher", "success")
+                  .then(()=> props?.setChange(prev=> !prev))
+                }
+                else {
+                    swal("Notice", "Error unknown", "error")
+                  }
+                handleClose()
               }
               else {
-                  swal("Notice", "Error unknown", "error")
+                const result= await update_teacher({firstName, lastName, middleName, phone, dob, teacher_id: teacherId,avatar: props?.avatar})
+                if(result?.update=== true) {
+                  swal("Notice", "Updated teacher", "success")
+                  .then(()=> props?.setChange(prev=> !prev))
                 }
-              handleClose()
+                else {
+                    swal("Notice", "Error unknown", "error")
+                  }
+                handleClose()
+              }
             }
             catch(error) {
+              console.log(error)
               swal("Notice", "Error server", "error")
 
             }

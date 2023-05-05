@@ -10,6 +10,7 @@ import get_profile_student from "@/app/api/student/get_profile";
 import Cookies from "js-cookie";
 import UpdateProfile from "./Component/UpdateProfile";
 import UpdatePassword from "./Component/UpdatePassword";
+import { Image } from "antd";
 const StudentProfile = () => {
   return (
     <Student>
@@ -38,6 +39,9 @@ function StudentData() {
         <div style={{color: "#000", display: "flex", alignItems: "center", marginBottom: 12}}><div style={{width: 120}}>Last name: </div><strong>{data?.last_name}</strong></div>
         <div style={{color: "#000", display: "flex", alignItems: "center", marginBottom: 12}}><div style={{width: 120}}>DOB: </div><strong>{data?.dob}</strong></div>
         <div style={{color: "#000", display: "flex", alignItems: "center", marginBottom: 12}}><div style={{width: 120}}>Phone: </div><strong>{data?.phone}</strong></div>
+        <div style={{color: "#000", display: "flex", alignItems: "center", marginBottom: 12}}><div style={{width: 120}}>Avatar: </div>
+          <Image  alt={""} src={data?.avatar} style={{width: 100, height: 100, borderRadius: "50%", objectFit: "none", color: "#000", display: "flex", alignItems: "center", marginBottom: 12}} />
+        </div>
         <br />
         <UpdateProfile {...data} setChange={setChange} />
         <div></div>

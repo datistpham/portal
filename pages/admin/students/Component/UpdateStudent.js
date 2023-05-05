@@ -14,6 +14,9 @@ import Select from "@mui/material/Select";
 import axios from "axios";
 import update_student from "@/app/api/admin/update_student";
 import swal from "sweetalert";
+import { DatePicker } from "antd";
+import UploadImage from "@/utils/UploadImage";
+import upload_image from "@/app/api/upload_image";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -27,6 +30,7 @@ export default function UpdateStudent(props) {
   const [lastName, setLastName] = React.useState(props?.last_name);
   const [dob, setDob] = React.useState(props?.dob);
   const [phone, setPhone] = React.useState(props?.phone);
+  const [avatar, setAvatar]= React.useState()
   const [classId, setClassId] = React.useState(props?.class_id);
   const [classList, setClassList] = React.useState([]);
   React.useEffect(() => {
@@ -89,12 +93,15 @@ export default function UpdateStudent(props) {
             <div></div>
             <br />
             <div></div>
-            <TextField
-              style={{ width: 400, height: 50 }}
-              label={"DOB"}
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-            />
+            <DatePicker getPopupContainer={(triggerNode) => {
+          return triggerNode.parentNode;
+        }} style={{width: "100%", height: 50, margin: "12px 0"}} onChange={(date, dateString)=> {
+            setDob(date?.format("DD/MM/YYYY"))
+          }} />
+          <div></div>
+            <br />
+            <div></div>
+          <UploadImage style={{width: "100%", height: 50, margin: "12px 0"}} setImage={setAvatar} title={"Avatar"} />
             <div></div>
             <br />
             <div></div>
@@ -134,7 +141,21 @@ export default function UpdateStudent(props) {
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={async ()=> {
             try {
-              const result= await update_student({firstName, lastName, middleName, phone, dob, class_id: classId, student_id: studentId})
+              if(avatar.thumbUrl) {
+                const avatarfinal= await upload_image(avatar.thumbUrl)
+                const result= await update_student({firstName, lastName, middleName, phone, dob, class_id: classId, student_id: studentId,avatar: avatarfinal.img})
+                if(result?.update=== true) {
+                  swal("Notice", "Updated student", "success")
+                  .then(()=> props?.setChange(prev=> !prev))
+                }
+                else {
+                    swal("Notice", "Error unknown", "error")
+                  }
+                handleClose()
+
+              }
+              else {
+                const result= await update_student({firstName, lastName, middleName, phone, dob, class_id: classId, student_id: studentId, avatar: props?.avatar})
               if(result?.update=== true) {
                 swal("Notice", "Updated student", "success")
                 .then(()=> props?.setChange(prev=> !prev))
@@ -143,8 +164,10 @@ export default function UpdateStudent(props) {
                   swal("Notice", "Error unknown", "error")
                 }
               handleClose()
+              }
             }
             catch(error) {
+              console.log(error)
               swal("Notice", "Error server", "error")
 
             }

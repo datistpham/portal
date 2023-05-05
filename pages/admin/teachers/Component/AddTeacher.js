@@ -16,6 +16,9 @@ import Select from "@mui/material/Select";
 import add_student from "@/app/api/admin/add_student";
 import swal from "sweetalert";
 import add_teacher from "@/app/api/admin/add_teacher";
+import { DatePicker } from "antd";
+import UploadImage from "@/utils/UploadImage";
+import upload_image from "@/app/api/upload_image";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -28,6 +31,7 @@ export default function AddTeacher(props) {
   const [middleName, setMiddleName] = React.useState("");
   const [dob, setDob] = React.useState("");
   const [phone, setPhone]= React.useState("")
+  const [avatar, setAvatar]= React.useState()
   const [account, setAccount]= React.useState("")
   const [password, setPassword]= React.useState("")
   const handleClickOpen = () => {
@@ -76,12 +80,12 @@ export default function AddTeacher(props) {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          <TextField
-            style={{ margin: "12px 0", width: 535 }}
-            label={"DOB"}
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
-          />
+         <DatePicker getPopupContainer={(triggerNode) => {
+          return triggerNode.parentNode;
+        }} style={{width: "100%", height: 50, margin: "12px 0"}} onChange={(date, dateString)=> {
+            setDob(date?.format("DD/MM/YYYY"))
+          }} />
+          <UploadImage style={{width: "100%", height: 50, margin: "12px 0"}} setImage={setAvatar} title={"Avatar"} />
           <TextField
             style={{ margin: "12px 0", width: 535 }}
             label={"Account"}
@@ -100,22 +104,26 @@ export default function AddTeacher(props) {
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={async ()=> {
             try {
-              const result= await add_teacher({firstName, lastName, dob, phone, middleName, account, password})
-              if(result?.add=== true) {
-                swal("Notice", "Added teacher", "success")
-                .then(()=> props?.setChange(prev=> !prev))
-                .then(()=> {
-                  setFirstName("")
-                  setLastName("")
-                  setMiddleName("")
-                  setDob("")
-                  setPhone("")
-                  setAccount("")
-                  setPassword("")
-                })
-              }
-              else {
-                swal("Notice", "Error unknown", "error")
+              if(avatar.thumbUrl) {
+                const avatarfinal= await upload_image(avatar.thumbUrl)
+
+                const result= await add_teacher({firstName, lastName, dob, phone, middleName, account, password, avatar: avatarfinal.img})
+                if(result?.add=== true) {
+                  swal("Notice", "Added teacher", "success")
+                  .then(()=> props?.setChange(prev=> !prev))
+                  .then(()=> {
+                    setFirstName("")
+                    setLastName("")
+                    setMiddleName("")
+                    // setDob("")
+                    setPhone("")
+                    setAccount("")
+                    setPassword("")
+                  })
+                }
+                else {
+                  swal("Notice", "Error unknown", "error")
+                }
               }
               handleClose()
             }

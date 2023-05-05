@@ -14,9 +14,9 @@ const apiTeacher = async (req, res) => {
   } else if (req.method === "POST") {
     try {
       // console.log(req.body)
-      const {firstName, lastName, dob, phone, account, password, middleName}= req.body
+      const {firstName, lastName, dob, phone, account, password, middleName, avatar}= req.body
       const account_id= v4()
-      const [rows]= await connection.execute("INSERT INTO teacher(first_name, middle_name, last_name, dob, phone, account_id) VALUES(?, ?, ?, ?, ?, ?)", [firstName || "", lastName || "", middleName || "", dob || "", phone || "", account_id || ""])
+      const [rows]= await connection.execute("INSERT INTO teacher(first_name, middle_name, last_name, dob, phone, account_id, avatar) VALUES(?, ?, ?, ?, ?, ?, ?)", [firstName || "", lastName || "", middleName || "", dob || "", phone || "", account_id || "", avatar || ""])
       const [rows1]= await connection.execute("INSERT INTO account(account_id, account, password, role) VALUES(?, ?, ?, ?)", [account_id || "", account || "", password || "", 2])
       return res.status(200).json({ message: "add success", add :true});
       
@@ -27,9 +27,9 @@ const apiTeacher = async (req, res) => {
   }
   else if(req.method=== "PATCH") {
     try {
-      const {firstName, lastName, dob, phone, account, password, middleName, teacher_id}= req.body
+      const {firstName, lastName, dob, phone, account, password, middleName, teacher_id, avatar}= req.body
   
-      const [rows] =await connection.execute("UPDATE teacher SET first_name= ?, last_name= ?, dob= ?, middle_name= ?, phone= ? WHERE teacher_id= ?", [firstName, lastName, dob, middleName, phone, teacher_id])
+      const [rows] =await connection.execute("UPDATE teacher SET first_name= ?, last_name= ?, dob= ?, middle_name= ?, phone= ?, avatar= ? WHERE teacher_id= ?", [firstName, lastName, dob, middleName, phone,avatar, teacher_id])
       return res.status(200).json({update: true})
       
     } catch (error) {

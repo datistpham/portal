@@ -8,6 +8,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import swal from 'sweetalert';
 import { Button } from '@mui/material';
 import AddStudent from './Component/AddStudent';
+import { Image } from 'antd';
 const AdminManageStudents= ()=> {
     return (
         <Admin>
@@ -59,6 +60,15 @@ function StudentData() {
           width: 160,
           valueGetter: (params) =>
             `${params.row.first_name || ''} ${params.row.middle_name || ''} ${params.row.last_name || ''}`,
+        },
+        {
+          field: 'avatar',
+          headerName: 'Avatar',
+          width: 150,
+          editable: true,
+          renderCell: (params)=> {
+            return <Image alt={"Can't display"} src={params.row?.avatar} />
+          }
         },
         {
             field: 'class_name',

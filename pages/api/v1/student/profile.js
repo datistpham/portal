@@ -11,11 +11,12 @@ const handler= async (req, res)=> {
         }
     }
     if(req.method=== "PATCH") {
-        const {student_id, firstName, middleName, lastName, dob, phone }= req.body
+        const {student_id, firstName, middleName, lastName, dob, phone, avatar }= req.body
         try {
-            const [rows]= await connection.execute("UPDATE student SET first_name= ?, middle_name= ?, last_name= ?, dob= ?, phone= ? WHERE student_id= ?", [firstName, middleName, lastName, dob, phone, student_id])
+            const [rows]= await connection.execute("UPDATE student SET first_name= ?, middle_name= ?, last_name= ?, dob= ?, phone= ?, avatar= ? WHERE student_id= ?", [firstName, middleName, lastName, dob, phone, avatar, student_id])
             return res.status(200).json({update: true})
         } catch (error) {
+            console.log(error)
             return res.status(500).json(error)
         }
     }

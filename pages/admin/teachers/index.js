@@ -7,6 +7,7 @@ import UpdateTeacher from "./Component/UpdateTeacher";
 import { DeleteOutlined } from "@ant-design/icons";
 import AddTeacher from "./Component/AddTeacher";
 import delete_teacher from "@/app/api/admin/delete_teacher";
+import { Image } from "antd";
 const AdminManageStudents= ()=> {
     return (
         <Admin>
@@ -72,6 +73,15 @@ function StudentData() {
         width: 160,
         valueGetter: (params) =>
           `${params.row.first_name || ''} ${params.row.middle_name || ''} ${params.row.last_name || ''}`,
+      },
+      {
+        field: 'avatar',
+        headerName: 'Avatar',
+        width: 150,
+        editable: true,
+        renderCell: (params)=> {
+          return <Image alt={"Can't display"} src={params.row?.avatar} />
+        }
       },
       {
           headerName: 'Action',
