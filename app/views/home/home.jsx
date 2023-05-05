@@ -4,6 +4,7 @@ import { Grid } from "@mui/material";
 import moment from "moment";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Truncate = dynamic(import('react-truncate'), {
@@ -13,6 +14,8 @@ const Truncate = dynamic(import('react-truncate'), {
 
 const HomePage = () => {
   const [postData, setPostData] = useState([]);
+  const router= useRouter()
+
   useEffect(() => {
     (async () => {
       const result = await get_post();
@@ -32,6 +35,7 @@ const HomePage = () => {
             xs={3}
             padding={3}
             style={{ padding: 10, width: "20%"}}
+            onClick={()=> router.push("/news/"+ item?.id)}
           >
             <div
                 style={{ width: "100%", aspectRatio: 2 / 3, objectFit: "cover", position: "relative" }}
