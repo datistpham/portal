@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2023 at 09:49 PM
+-- Generation Time: May 05, 2023 at 04:55 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -68,8 +68,14 @@ INSERT INTO `account` (`account_id`, `account`, `password`, `role`) VALUES
 ('1', 'admin', '123456789', 3),
 ('2', 'student1', 'Giangvippro1!', 1),
 ('37f24e90-f345-4797-9905-09b389d4c2dd', 'admin', '123456789', 1),
+('44294ef1-d87f-4482-b3d3-154f3518f3e0', 'teacher234', '123456789', 2),
+('6a5d63a8-7b55-4e49-8f18-7dbfc8b5b622', 'student12', 'Giangvippro1!', 1),
+('6e6e35ad-43cb-4728-85d3-6ca8bac2fbb5', 'account12345678', '1111111111111', 1),
 ('6ef3cfff-48d9-4119-b08e-7c8bf1560d64', 'teacher1', '123456789', 2),
-('b448400b-6dee-4045-aecc-f74e40d4638a', 'admin', '123456789', 1);
+('b448400b-6dee-4045-aecc-f74e40d4638a', 'admin', '123456789', 1),
+('bdf00ee4-f8bf-41b8-94dd-8523dbff4bd4', 'admin', '123456789', 1),
+('bec2b166-81b0-4dfd-9c53-98a8c82a60a0', 'account3', '037482389239', 1),
+('f4d9cde8-629b-4071-8848-6fb94f0a5229', 'student3', 'Giangvippro1!', 1);
 
 -- --------------------------------------------------------
 
@@ -246,15 +252,21 @@ CREATE TABLE `student` (
   `dob` varchar(255) NOT NULL,
   `gender` int(11) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `account_id` varchar(255) NOT NULL
+  `account_id` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `class_id`, `dob`, `gender`, `phone`, `account_id`) VALUES
-(2, 'Pham1', 'Truong', 'Giang', 9, '06/08/2002', 0, '0388015984', '2');
+INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `class_id`, `dob`, `gender`, `phone`, `account_id`, `avatar`) VALUES
+(2, 'Pham1', 'Truong', 'Giang', 9, '06/08/2002', 0, '0388015984', '2', '/assets/i/48ad8edc-05b0-4a87-b897-ccc7a2004678.png'),
+(3, 'Pham', 'Giang', 'Truong', 7, '10/07/2000', 0, '0388015984', '6e6e35ad-43cb-4728-85d3-6ca8bac2fbb5', '/assets/i/9488dbff-b5a4-47ae-a84f-86c3e824d797.png'),
+(4, 'Pham', 'Giang', 'Truong', 9, '18/05/2023', 0, '0388015984', 'bdf00ee4-f8bf-41b8-94dd-8523dbff4bd4', ''),
+(5, 'Nguyen', 'Phuong Thao', 'Thi ', 9, '01/05/2023', 0, '0389289111', 'f4d9cde8-629b-4071-8848-6fb94f0a5229', ''),
+(6, 'Pham', 'Giang', 'Thi ', 10, '21/05/2023', 0, '0388015984', '6a5d63a8-7b55-4e49-8f18-7dbfc8b5b622', '/assets/i/0590815d-0916-4d83-a0c6-20332e729eb3.png'),
+(7, 'Pham', 'Giang', 'Truong', 9, '', 0, '0388015984', 'bec2b166-81b0-4dfd-9c53-98a8c82a60a0', '/assets/i/862ecbf9-a5bd-4c99-8953-c35d5a31326c.png');
 
 -- --------------------------------------------------------
 
@@ -290,15 +302,17 @@ CREATE TABLE `teacher` (
   `last_name` varchar(255) NOT NULL,
   `dob` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `account_id` varchar(255) NOT NULL
+  `account_id` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `teacher`
 --
 
-INSERT INTO `teacher` (`teacher_id`, `first_name`, `middle_name`, `last_name`, `dob`, `phone`, `account_id`) VALUES
-(2, 'Nguyen 1', 'Thị', 'Yến Nhi', '06/01/1997', '03921891', '6ef3cfff-48d9-4119-b08e-7c8bf1560d64');
+INSERT INTO `teacher` (`teacher_id`, `first_name`, `middle_name`, `last_name`, `dob`, `phone`, `account_id`, `avatar`) VALUES
+(2, 'Nguyen', 'Thị', 'Yến Nhi', '06/01/1997', '03921891', '6ef3cfff-48d9-4119-b08e-7c8bf1560d64', '/assets/i/f9087ffa-2ee0-44ee-bb0c-110263f56662.png'),
+(3, 'Nguyễn ', 'Ngân', 'Thị Khánh', '12/07/1999', '0388015984', '44294ef1-d87f-4482-b3d3-154f3518f3e0', '/assets/i/23197e0c-cc98-40c1-b62b-e8acbfd6db7f.png');
 
 -- --------------------------------------------------------
 
@@ -482,7 +496,7 @@ ALTER TABLE `score`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `student_learning_course`
@@ -494,7 +508,7 @@ ALTER TABLE `student_learning_course`
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `teacher_teach_subject`
