@@ -18,7 +18,17 @@ const handler = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error)
     }
-  } else if (req.method === "DELETE") {
+  }
+  else if(req.method=== "PATCH" ) {
+    try {
+      const {content, title, image, id}= req.body
+      const [rows]= await connection.execute("UPDATE post SET content= ?, title= ?, image= ? WHERE id= ?", [content, title, image, id])
+      return res.status(200).json({update: true})
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  }
+  else if (req.method === "DELETE") {
     try {
       await connection.execute("DELETE FROM post WHERE id = ?", [
         req.body.student_id || "",

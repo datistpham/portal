@@ -7,8 +7,9 @@ import { DeleteOutlined } from '@ant-design/icons';
 import swal from 'sweetalert';
 import UpdatePost from './Component/UpdatePost';
 import Image from 'next/image';
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import { useRouter } from 'next/router';
+import { Button } from '@mui/material';
 const AdminManagePost= ()=> {
     return (
         <Admin>
@@ -34,6 +35,12 @@ function PostData() {
 
         },
         {
+          field: 'title',
+          headerName: 'Title post',
+          width: 150,
+          editable: true,
+        },
+        {
             field: 'content',
             headerName: 'Content post',
             width: 150,
@@ -52,7 +59,9 @@ function PostData() {
             renderCell: (params)=> {
                 return (
                     <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 10}}>
-                        <UpdatePost {...params.row} />
+                        <Button variant={"contained"} onClick={()=> {
+                          router.push("/admin/post/edit/"+ params.row.id)
+                        }}>Update post</Button>
                         <DeleteOutlined onClick={async ()=> {
                             swal("Notice", "Are you sure want to delete this post", {buttons: {
                                 ok: "Confirm",
@@ -102,7 +111,7 @@ function PostData() {
 
     return (
       <Box sx={{ height: 400, width: '100%' }}>
-        <Button onClick={()=> router.push("/admin/post/add")} type={"primary"}>Create post</Button>
+        <Button variant={"contained"} onClick={()=> router.push("/admin/post/add")} type={"primary"}>Create post</Button>
         <div></div>
         <br />
         <div></div>
