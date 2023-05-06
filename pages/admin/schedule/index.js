@@ -76,7 +76,7 @@ function ManageSchedule() {
                       {/* <UpdateTeacher {...params.row} setChange={setChange} /> */}
                       {/* <UpdateTeacherTeachSubject {...params.row} setChange={setChange} /> */}
                       <DeleteOutlined onClick={async ()=> {
-                          swal("Notice", "Are you sure want to delete this teacher teach class ?", {buttons: {
+                          swal("Notice", "Are you sure want to delete this schedule of class ?", {buttons: {
                               ok: "Confirm",
                               cancel: "Cancel"
                           }})

@@ -6,9 +6,11 @@ import {
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/component/Header";
+import { useRouter } from "next/router";
+import { AppContext } from "../_app";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -87,11 +89,23 @@ const items = [
 //   ]),
 ];
 const Admin = ({ children }) => {
+  const {auth }= useContext(AppContext)
+  const router= useRouter()
   const [selected, setSelected] = useState(1);
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+  useEffect(()=> {
+    if(router.pathname=== "/admin") {
+      router.push("/admin/students")
+    }
+  }, [router])
+  useEffect(()=> {
+    if(auth=== false) {
+      router.push("/login")
+    }
+  }, [auth])
   return (
    <>
     <Header />

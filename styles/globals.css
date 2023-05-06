@@ -192,3 +192,11 @@ a {
 .file-input-container:focus-within .file-icon {
   color: #4caf50;
 }
+
+.wrap__schedule * {
+  color: #000 !important
+}
+
+.wrap-inp-search > div {
+  height: 36px !important;
+}

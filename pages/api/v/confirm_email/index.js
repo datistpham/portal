@@ -1,7 +1,7 @@
 import connection from "../../connect";
 import sendEmail from "../../utils/mail"
 
-const generateCode = () => {
+export const generateCode = () => {
     const code = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
     return code;
   };

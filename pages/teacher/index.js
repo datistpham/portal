@@ -5,11 +5,13 @@ import {
     MenuUnfoldOutlined,
   } from "@ant-design/icons";
   import { Button, Menu } from "antd";
-  import { createContext, useEffect, useState } from "react";
+  import { createContext, useContext, useEffect, useState } from "react";
   import Link from "next/link";
   import Header from "@/component/Header";
 import get_class_homeroom from "@/app/api/teacher/get_class_homeroom";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import { AppContext } from "../_app";
   
   function getItem(label, key, icon, children, type) {
     return {
@@ -51,7 +53,7 @@ import Cookies from "js-cookie";
       getItem(<Link href="/teacher/subject/student">Manage student</Link>, "99",  <ContainerOutlined />),
       getItem(<Link href="/teacher/subject/score">Manage score</Link>, "100",  <ContainerOutlined />),
       getItem(<Link href="/teacher/subject/attendance">Manage attendance</Link>, "101",  <ContainerOutlined />),
-      getItem(<Link href="/teacher/subject/application">Manage application</Link>, "102",  <ContainerOutlined />),
+      // getItem(<Link href="/teacher/subject/application">Manage application</Link>, "102",  <ContainerOutlined />),
       ,
     getItem(
       <Link href="/teacher/subject/schedule">Manage schedule</Link>,
@@ -62,6 +64,8 @@ import Cookies from "js-cookie";
   ];
   export const TeacherContext= createContext()
   const Teacher = ({ children }) => {
+    const {auth }= useContext(AppContext)
+    const router= useRouter()
     const [selected, setSelected] = useState(1);
     const [collapsed, setCollapsed] = useState(false);
     const [homeRoom, setHomeRoom]= useState()
@@ -73,6 +77,16 @@ import Cookies from "js-cookie";
         }
       })()
     }, [])
+    useEffect(()=> {
+      if(router.pathname=== "/teacher") {
+        router.push("/teacher/profile")
+      }
+    }, [router])
+    useEffect(()=> {
+      if(auth=== false) {
+        router.push("/login")
+      }
+    }, [auth])
     const toggleCollapsed = () => {
       setCollapsed(!collapsed);
     };
@@ -105,7 +119,7 @@ import Cookies from "js-cookie";
             items={items}
           />
         </div>
-        {children || ""}
+        {children}
       </div>
      </TeacherContext.Provider>
     );

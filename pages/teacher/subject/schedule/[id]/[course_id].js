@@ -53,7 +53,7 @@ function StudentData() {
       <div></div>
       <br />
       <div></div>
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%" }} className={"wrap__schedule"}>
         <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
           <div style={{ flex: "1 1 0", border: "1px solid #000", height: 40, display: "flex", justifyContent: "center", alignItems: "center" }}>
             Day

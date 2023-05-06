@@ -6,12 +6,14 @@ import {
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/component/Header";
 // import get_class_homeroom from "@/app/api/teacher/get_class_homeroom";
 import get_profile_student from "@/app/api/student/get_profile"
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import { AppContext } from "../_app";
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -51,6 +53,8 @@ const items = [
 ];
 export const StudentContext= createContext()
 const Student = ({ children }) => {
+  const {auth }= useContext(AppContext)
+  const router= useRouter()
   const [selected, setSelected] = useState(1);
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
@@ -63,6 +67,16 @@ const Student = ({ children }) => {
       return setStudentData(result[0])
     })()
   }, [])
+  useEffect(()=> {
+    if(router.pathname=== "/student") {
+      router.push("/student/profile")
+    }
+  }, [router])
+  useEffect(()=> {
+    if(auth=== false) {
+      router.push("/login")
+    }
+  }, [auth])
   return (
     <StudentContext.Provider value={{studentData}}>
       <Header />

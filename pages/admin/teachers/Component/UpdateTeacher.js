@@ -117,8 +117,8 @@ export default function UpdateTeacher(props) {
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={async ()=> {
             try {
-              if(avatar.thumbUrl) {
-                const avatarfinal= await upload_image(avatar.thumbUrl)
+              if(avatar?.thumbUrl) {
+                const avatarfinal= await upload_image(avatar?.thumbUrl)
                 const result= await update_teacher({firstName, lastName, middleName, phone, dob, teacher_id: teacherId,avatar: avatarfinal.img})
                 if(result?.update=== true) {
                   swal("Notice", "Updated teacher", "success")

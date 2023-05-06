@@ -76,7 +76,7 @@ function StudentData() {
             <UpdateRegisterCourse setChange={setChange} {...params.row} />
             <DeleteOutlined
               onClick={async () => {
-                swal("Notice", "Are you sure want to delete this student", {
+                swal("Notice", "Are you sure want to delete this request", {
                   buttons: {
                     ok: "Confirm",
                     cancel: "Cancel",

@@ -54,7 +54,7 @@ const columns = [
             gap: 10,
           }}
         >
-          <UpdateAccount {...params.row} />
+          {/* <UpdateAccount {...params.row} /> */}
           <DeleteOutlined
             onClick={async () => {
               swal("Notice", "Are you sure want to delete this account", {

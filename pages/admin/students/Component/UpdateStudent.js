@@ -141,8 +141,8 @@ export default function UpdateStudent(props) {
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={async ()=> {
             try {
-              if(avatar.thumbUrl) {
-                const avatarfinal= await upload_image(avatar.thumbUrl)
+              if(avatar?.thumbUrl) {
+                const avatarfinal= await upload_image(avatar?.thumbUrl)
                 const result= await update_student({firstName, lastName, middleName, phone, dob, class_id: classId, student_id: studentId,avatar: avatarfinal.img})
                 if(result?.update=== true) {
                   swal("Notice", "Updated student", "success")
@@ -156,15 +156,15 @@ export default function UpdateStudent(props) {
               }
               else {
                 const result= await update_student({firstName, lastName, middleName, phone, dob, class_id: classId, student_id: studentId, avatar: props?.avatar})
-              if(result?.update=== true) {
-                swal("Notice", "Updated student", "success")
-                .then(()=> props?.setChange(prev=> !prev))
-              }
-              else {
-                  swal("Notice", "Error unknown", "error")
+                if(result?.update=== true) {
+                  swal("Notice", "Updated student", "success")
+                  .then(()=> props?.setChange(prev=> !prev))
                 }
-              handleClose()
-              }
+                else {
+                    swal("Notice", "Error unknown", "error")
+                  }
+                handleClose()
+                }
             }
             catch(error) {
               console.log(error)

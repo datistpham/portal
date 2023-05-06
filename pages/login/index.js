@@ -17,6 +17,16 @@ import login from '@/app/api/login';
 import Cookies from 'js-cookie';
 import swal from 'sweetalert';
 import { useRouter } from 'next/router';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import { TextField } from '@mui/material';
+import axios from 'axios';
+import OTPInput from 'react-otp-input';
 
 function Login() {
   const router= useRouter()
@@ -42,6 +52,8 @@ function Login() {
                 <MDBIcon fas icon="lock me-3" size='lg'/>
                 <MDBInput value={password} onChange={(e)=> setPassword(e.target.value)} label='Password' id='form3' type='password'/>
               </div>
+              <div><ForgotPassword /></div>
+              <br />
 
               <MDBBtn onClick={async ()=> {
                 try {
@@ -95,3 +107,139 @@ function Login() {
 }
 
 export default Login;
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+function ForgotPassword() {
+  const [open, setOpen] = React.useState(false);
+  const [email, setEmail]= React.useState("")
+  const [status, setStatus]= React.useState(1)
+  const [password, setPassword]= React.useState("")
+  const [confirmPassword, setConfirmPassword]= React.useState("")
+  const [otp, setOtp]= React.useState("")
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <div style={{cursor: "pointer"}} onClick={handleClickOpen}>
+        Forgot password
+      </div>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Forgot password"}</DialogTitle>
+        <DialogContent>
+          {
+            status=== 1 && 
+            <DialogContentText id="alert-dialog-slide-description">
+              <TextField placeholder={"Your email to recovery password"} value={email} onChange={(e)=> setEmail(e.target.value)} style={{width: 400, height: 40, marginTop: 12}} />
+            </DialogContentText>
+          }
+          {
+            status===2 && 
+            <DialogContentText id="alert-dialog-slide-description">
+            <div style={{textAlign: "center", marginBottom: 12}}>We{"'"} sent to you a code include 6 digit to complete recover password, Please check your email and type code to below field</div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <OTPInput
+                    value={otp}
+                    onChange={setOtp}
+                    numInputs={6}
+                    inputStyle={{width: 40, height: 40, color: "#000", backgroundColor: "#fff"}}
+                    renderSeparator={<span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>}
+                    renderInput={(props) => <input style={{width: 40, height: 40, background: "#fff"}} {...props} />}
+                />
+            </div>
+          </DialogContentText>
+          }
+          {
+            status=== 3 &&  <>
+              <TextField placeholder={"New password"} value={password} onChange={(e)=> setPassword(e.target.value)} style={{width: 400, height: 40, marginTop: 12}} />
+              <div></div>
+              <br />
+              <div></div>
+              <TextField placeholder={"Confirm new password"} value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value)} style={{width: 400, height: 40, marginTop: 12}} />
+            </>
+          }
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+          {
+           status=== 1 &&  
+          <Button onClick={async ()=> {
+            const res= await axios({
+              url: "/api/v1/find/student",
+              method: "post",
+              data: {
+                email
+              }
+            })
+            const result= await res.data
+            if(result?.find=== true) {
+              setStatus(2)
+            }
+            else {
+              swal("Notice", "Email is not exist, try again", "error")
+            }
+          }}>Confirm</Button>
+          }
+          {
+            status===2 && <>
+            <Button variant={"contained"} onClick={async ()=> {
+            const res= await axios({
+              url: "/api/v/complete-signup",
+              method: "post",
+              data: {
+                email, code: otp
+              }
+            })
+            const result= await res.data
+            if(result?.complete=== true) {
+              setStatus(3)
+            }
+            else {
+              swal("Notice", "Verify code is not correct, try again", "error")
+            }
+          }}>Verify code</Button>
+            </>
+          }
+          {
+            status===3 && <>
+            <Button variant={"contained"} onClick={async ()=> {
+             if(password.trim() !== confirmPassword.trim()) {
+              return swal("Notice", "Password is not match, try again", "error") 
+             }
+            const res= await axios({
+              url: "/api/v/reset/password",
+              method: "post",
+              data: {
+                email, password
+              }
+            })
+            const result= await res.data
+            if(result?.update=== true) {
+              swal("Notice", "Update password is successfully","success")
+              .then(()=> handleClose())
+            }
+            else {
+              swal("Notice", "Password is not true, try again", "error")
+            }
+          }}>Save</Button>
+            </>
+          }
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
