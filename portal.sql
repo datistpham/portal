@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2023 at 04:55 PM
+-- Generation Time: May 06, 2023 at 04:08 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -240,6 +240,31 @@ INSERT INTO `score` (`score_id`, `student_id`, `class_id`, `course_id`, `score_1
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sign_up_student`
+--
+
+CREATE TABLE `sign_up_student` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `dob` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `avatar` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sign_up_student`
+--
+
+INSERT INTO `sign_up_student` (`id`, `email`, `first_name`, `middle_name`, `last_name`, `dob`, `phone`, `class_id`, `avatar`) VALUES
+(1, 'datistpham@gmail.com', 'Pham', 'Truong', 'Giang', '20/05/2002', '0388015984', 10, '/assets/i/04afa761-45b0-4bcb-a6a4-410e5fd760cd.png');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student`
 --
 
@@ -253,20 +278,21 @@ CREATE TABLE `student` (
   `gender` int(11) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `account_id` varchar(255) NOT NULL,
-  `avatar` varchar(255) NOT NULL
+  `avatar` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `class_id`, `dob`, `gender`, `phone`, `account_id`, `avatar`) VALUES
-(2, 'Pham1', 'Truong', 'Giang', 9, '06/08/2002', 0, '0388015984', '2', '/assets/i/48ad8edc-05b0-4a87-b897-ccc7a2004678.png'),
-(3, 'Pham', 'Giang', 'Truong', 7, '10/07/2000', 0, '0388015984', '6e6e35ad-43cb-4728-85d3-6ca8bac2fbb5', '/assets/i/9488dbff-b5a4-47ae-a84f-86c3e824d797.png'),
-(4, 'Pham', 'Giang', 'Truong', 9, '18/05/2023', 0, '0388015984', 'bdf00ee4-f8bf-41b8-94dd-8523dbff4bd4', ''),
-(5, 'Nguyen', 'Phuong Thao', 'Thi ', 9, '01/05/2023', 0, '0389289111', 'f4d9cde8-629b-4071-8848-6fb94f0a5229', ''),
-(6, 'Pham', 'Giang', 'Thi ', 10, '21/05/2023', 0, '0388015984', '6a5d63a8-7b55-4e49-8f18-7dbfc8b5b622', '/assets/i/0590815d-0916-4d83-a0c6-20332e729eb3.png'),
-(7, 'Pham', 'Giang', 'Truong', 9, '', 0, '0388015984', 'bec2b166-81b0-4dfd-9c53-98a8c82a60a0', '/assets/i/862ecbf9-a5bd-4c99-8953-c35d5a31326c.png');
+INSERT INTO `student` (`student_id`, `first_name`, `middle_name`, `last_name`, `class_id`, `dob`, `gender`, `phone`, `account_id`, `avatar`, `email`) VALUES
+(2, 'Pham1', 'Truong', 'Giang', 9, '06/08/2002', 0, '0388015984', '2', '/assets/i/48ad8edc-05b0-4a87-b897-ccc7a2004678.png', ''),
+(3, 'Pham', 'Giang', 'Truong', 7, '10/07/2000', 0, '0388015984', '6e6e35ad-43cb-4728-85d3-6ca8bac2fbb5', '/assets/i/9488dbff-b5a4-47ae-a84f-86c3e824d797.png', ''),
+(4, 'Pham', 'Giang', 'Truong', 9, '18/05/2023', 0, '0388015984', 'bdf00ee4-f8bf-41b8-94dd-8523dbff4bd4', '', ''),
+(5, 'Nguyen', 'Phuong Thao', 'Thi ', 9, '01/05/2023', 0, '0389289111', 'f4d9cde8-629b-4071-8848-6fb94f0a5229', '', ''),
+(6, 'Pham', 'Giang', 'Thi ', 10, '21/05/2023', 0, '0388015984', '6a5d63a8-7b55-4e49-8f18-7dbfc8b5b622', '/assets/i/0590815d-0916-4d83-a0c6-20332e729eb3.png', ''),
+(7, 'Pham', 'Giang', 'Truong', 9, '', 0, '0388015984', 'bec2b166-81b0-4dfd-9c53-98a8c82a60a0', '/assets/i/862ecbf9-a5bd-4c99-8953-c35d5a31326c.png', '');
 
 -- --------------------------------------------------------
 
@@ -352,6 +378,31 @@ CREATE TABLE `teacher_teach_subject` (
 INSERT INTO `teacher_teach_subject` (`teacher_teach_subject_id`, `teacher_id`, `course_id`, `class_id`) VALUES
 (2, 2, 2, 3);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `verify_code`
+--
+
+CREATE TABLE `verify_code` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `verify_code`
+--
+
+INSERT INTO `verify_code` (`id`, `email`, `code`) VALUES
+(1, 'datistpham@gmail.com', '174025'),
+(2, 'datistpham@gmail.com', '309869'),
+(3, 'datistpham@gmail.com', '864144'),
+(4, 'datistpham@gmail.com', '338214'),
+(5, 'datistpham@gmail.com', '386538'),
+(6, 'datistpham@gmail.com', '825857'),
+(7, 'datistpham@gmail.com', '922400');
+
 --
 -- Indexes for dumped tables
 --
@@ -411,6 +462,12 @@ ALTER TABLE `score`
   ADD PRIMARY KEY (`score_id`);
 
 --
+-- Indexes for table `sign_up_student`
+--
+ALTER TABLE `sign_up_student`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
@@ -439,6 +496,12 @@ ALTER TABLE `teacher_homeroom`
 --
 ALTER TABLE `teacher_teach_subject`
   ADD PRIMARY KEY (`teacher_teach_subject_id`);
+
+--
+-- Indexes for table `verify_code`
+--
+ALTER TABLE `verify_code`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -493,6 +556,12 @@ ALTER TABLE `score`
   MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `sign_up_student`
+--
+ALTER TABLE `sign_up_student`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
@@ -515,6 +584,12 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `teacher_teach_subject`
   MODIFY `teacher_teach_subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `verify_code`
+--
+ALTER TABLE `verify_code`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

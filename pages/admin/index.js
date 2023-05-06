@@ -61,6 +61,11 @@ const items = [
     "8",
     <ContainerOutlined />
   ),
+  getItem(
+    <Link href="/admin/request-signup">Manage request signup</Link>,
+    "9",
+    <ContainerOutlined />
+  ),
 //   getItem(
 //     <Link href="/admin/teachers">Manage teacher</Link>,
 //     "5",

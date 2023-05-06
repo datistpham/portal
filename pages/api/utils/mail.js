@@ -44,4 +44,26 @@ const sendEmail= async (email, code)=> {
     })
 }
 
+export const sendMailAccount= async (email, account, password)=> {
+  transporter.sendMail({
+    from: 'datistpham@gmail.com',
+    to: email,
+    subject: 'Verfify account',
+    html: `
+      <div>Congratulations, you've became a part of us, this is your account, let's change your password when login</div>
+      <br />
+      <div>Account: <strong>${account}</strong></div>
+      <br />
+      <div>Password: <strong>${password}</strong></div>
+      <br />
+      <div>Have nice day !</div>
+    `
+}, (err, result)=> {
+    if(err) throw err
+    return result.response
+})
+}
+
+
+
 export default sendEmail
