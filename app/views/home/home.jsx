@@ -1,16 +1,11 @@
 import get_post from "@/app/api/get_post";
 import Header from "@/app/component/Header";
-import { Grid } from "@mui/material";
+// import { Grid } from "@mui/material";
 import moment from "moment";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
-const Truncate = dynamic(import('react-truncate'), {
-    ssr: false,
-    loading: () => <p>Loading ...</p>,
-  })
 
 const HomePage = () => {
   const [postData, setPostData] = useState([]);

@@ -64,6 +64,13 @@ function Login() {
                   swal("Notice", "Error unknown", "error")
                 }
               }} className='mb-4' size='lg'>Login</MDBBtn>
+              <br />
+              <div className="">You{"'"}re not an account?</div>
+              <br />
+              <MDBBtn onClick={()=> {
+                router.push("/signup")
+              }} className='mb-4' size='lg'>Signup</MDBBtn>
+              <br />
               <div className="">You{"'"}re teacher?</div>
               <br />
               <MDBBtn onClick={()=> {
