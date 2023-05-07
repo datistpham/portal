@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import login from '@/app/api/login';
 import swal from 'sweetalert';
 import Header from '@/app/component/Header';
+import Cookies from 'js-cookie';
 
 function Login() {
   const router= useRouter()
@@ -50,6 +51,12 @@ function Login() {
                 }
                 else {
                   swal("Notice", "Login is successfully", "success")
+                  .then(() => {
+                    Cookies.set("uid", result?.uid);
+                    Cookies.set("role", result?.role);
+                    Cookies.set("sid", result?.sid)
+
+                  })
                   if(result?.role=== 1) {
                     router.push("/student")
                   }

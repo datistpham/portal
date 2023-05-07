@@ -64,7 +64,9 @@ function Login() {
                       .then(()=> {
                         Cookies.set("uid", result?.uid)
                         Cookies.set("role", result?.role)
+                        Cookies.set("sid", result?.sid)
                       })
+                      
                       .then(()=> window.location.href= window.location.origin+ "/student")
                     }
                   }
