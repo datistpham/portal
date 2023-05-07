@@ -15,13 +15,13 @@ export default function App({ Component, pageProps }) {
       const result= await role()
       if(result?.login === true ) {
         setUser(result)
-        if(result.data?.role=== 1) {
+        if(parseInt(result.data?.role)=== 1) {
           router.push("/student")
         }
-        else if(result?.data?.role===2) {
+        else if(parseInt(result?.data?.role)===2) {
           router.push("/teacher")
         }
-        else if(result?.data?.role===3) {
+        else if(parseInt(result?.data?.role)===3) {
           router.push("/admin")
         }
         setAuth(true)
