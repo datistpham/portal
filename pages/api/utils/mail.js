@@ -1,55 +1,60 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   port: 465,
   secure: true,
   auth: {
-    user: 'nguyenadtest1410@gmail.com',
-    pass: 'xtwrjfhjdtsahjom',
+    user: "nguyenadtest1410@gmail.com",
+    pass: "xtwrjfhjdtsahjom",
   },
 });
 
 const mailOptions = {
-  from: 'nguyenadtest1410@gmail.com',
-  to: 'recipient_email_address',
-  subject: 'Test Email',
-  text: 'This is a test email sent from Nodemailer!',
+  from: "nguyenadtest1410@gmail.com",
+  to: "recipient_email_address",
+  subject: "Test Email",
+  text: "This is a test email sent from Nodemailer!",
 };
 
-
-
-transporter.sendMail({
-    from: 'nguyenadtest1410@gmail.com',
-    to: 'recipient_email_address',
-    subject: 'Test Email',
-    text: 'This is a test email sent from Nodemailer!',
-  }, (error, info) => {
-  if (error) {
-    console.log('Error sending email:', error);
-  } else {
-    console.log('Email sent:', info.response);
+transporter.sendMail(
+  {
+    from: "nguyenadtest1410@gmail.com",
+    to: "recipient_email_address",
+    subject: "Test Email",
+    text: "This is a test email sent from Nodemailer!",
+  },
+  (error, info) => {
+    if (error) {
+      console.log("Error sending email:", error);
+    } else {
+      console.log("Email sent:", info.response);
+    }
   }
-});
+);
 
-const sendEmail= async (email, code)=> {
-    transporter.sendMail({
-        from: 'nguyenadtest1410@gmail.com',
-        to: email,
-        subject: 'Verfify account',
-        text: 'Your code verify is: '+ code,
-    }, (err, result)=> {
-        if(err) throw err
-        return result.response
-    })
-}
+const sendEmail = async (email, code) => {
+  transporter.sendMail(
+    {
+      from: "nguyenadtest1410@gmail.com",
+      to: email,
+      subject: "Verfify account",
+      text: "Your code verify is: " + code,
+    },
+    (err, result) => {
+      if (err) throw err;
+      return result.response;
+    }
+  );
+};
 
-export const sendMailAccount= async (email, account, password)=> {
-  transporter.sendMail({
-    from: 'nguyenadtest1410@gmail.com',
-    to: email,
-    subject: 'Verfify account',
-    html: `
+export const sendMailAccount = async (email, account, password) => {
+  transporter.sendMail(
+    {
+      from: "nguyenadtest1410@gmail.com",
+      to: email,
+      subject: "Verfify account",
+      html: `
       <div>Congratulations, you've became a part of us, this is your account, let's change your password when login</div>
       <br />
       <div>Account: <strong>${account}</strong></div>
@@ -57,13 +62,13 @@ export const sendMailAccount= async (email, account, password)=> {
       <div>Password: <strong>${password}</strong></div>
       <br />
       <div>Have nice day !</div>
-    `
-}, (err, result)=> {
-    if(err) throw err
-    return result.response
-})
-}
+    `,
+    },
+    (err, result) => {
+      if (err) throw err;
+      return result.response;
+    }
+  );
+};
 
-
-
-export default sendEmail
+export default sendEmail;

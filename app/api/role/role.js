@@ -7,6 +7,7 @@ const role= async ()=> {
         method: "post",
         data: {
             uid: Cookies.get("uid") || "",
+            sid: Cookies.get("sid") || "",
             role: Cookies.get("role") || ""
         }
     })

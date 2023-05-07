@@ -76,7 +76,7 @@ const Student = ({ children }) => {
     if(auth=== false) {
       router.push("/login")
     }
-  }, [auth])
+  }, [auth, router])
   return (
     <StudentContext.Provider value={{studentData}}>
       <Header />

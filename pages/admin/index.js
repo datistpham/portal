@@ -105,7 +105,7 @@ const Admin = ({ children }) => {
     if(auth=== false) {
       router.push("/login")
     }
-  }, [auth])
+  }, [auth, router])
   return (
    <>
     <Header />

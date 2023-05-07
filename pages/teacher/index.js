@@ -86,7 +86,7 @@ import { AppContext } from "../_app";
       if(auth=== false) {
         router.push("/login")
       }
-    }, [auth])
+    }, [auth, router])
     const toggleCollapsed = () => {
       setCollapsed(!collapsed);
     };
