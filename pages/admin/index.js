@@ -11,6 +11,7 @@ import Link from "next/link";
 import Header from "@/component/Header";
 import { useRouter } from "next/router";
 import { AppContext } from "../_app";
+import role from "@/app/api/role/role";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -96,16 +97,23 @@ const Admin = ({ children }) => {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+
   useEffect(()=> {
     if(router.pathname=== "/admin") {
       router.push("/admin/students")
     }
   }, [router])
   useEffect(()=> {
-    if(auth=== false) {
-      router.push("/login")
-    }
-  }, [auth, router])
+    (async ()=> {
+      const result= await role()
+      if(result?.login === true ) {
+       if(parseInt(result?.data?.role) !== 3) {
+         router.push("/login")
+       }
+      }
+     
+    })()
+  }, [])
   return (
    <>
     <Header />
